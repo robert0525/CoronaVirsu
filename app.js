@@ -1,5 +1,5 @@
 window.onload = function() {
-
+    getCovidStats();
 }
 
 function getCovidStats() {
@@ -9,10 +9,18 @@ function getCovidStats() {
         let population = data.location.country_population;
         let update = data.location.last_updated;
         let confirmedCases = data.location.latest.confirmed;
-        let death = data.location.lstest.death;
+        let deaths = data.location.lstest.deaths;
+
+        document.getElementById('population').innerHTML = population.toLocaleString('en');
+        document.getElementById('update').innerHTML = update.substr(0, 10);
+        document.getElementById('cases').innerHTML = confirmedCases.toLocaleString('en');
+        document.getElementById('deaths').innerHTML = deaths.toLocaleString('en');
+        document.getElementById('percent').innerHTML = ((Number(deaths)/Number(confirmedCases))*100).toLocaleString("en", {minimumFractionDigits: 2, maximumFractionDigits: 2}) + "%";
+
+
     })
     .catch(function() {
         console.log(" You have an error");
     })
-
+    setTimeout(getCovidStats, 43200000)
 }
